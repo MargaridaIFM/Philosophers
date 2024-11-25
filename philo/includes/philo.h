@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:12:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/17 12:36:11 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:36:25 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,41 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <signal.h>
+#include <stdbool.h>
 
-
-typedef struct s_info
-{
-    int				nbr_of_philo;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-}               t_info;
+typedef struct s_info t_info;
 
 typedef struct s_philo
 {
-    /* data */
+    unsigned int	id;
+    pthread_t 		theread_id;		
+    pthread_mutex_t	*rigth_fork;
+	pthread_mutex_t	*left_fork;
+    unsigned int 	time_last_meal;
+    unsigned int	meals_eaten;
+   t_info 			*table; // TODO tirar ?
 } t_philo;
 
+typedef struct s_info
+{
+	unsigned int	start_time;
+	unsigned int	nbr_of_philos;
+	unsigned int	time_to_die;
+	unsigned int	time_to_eat;
+	unsigned int	time_to_sleep;
+	unsigned int	nbr_of_meals;
+	unsigned int	died;  // TODO ou passar para int;
+	unsigned int	all_eaten;
+	t_philo			*philos;
+	pthread_mutex_t	*forks;
+}               t_info;
+
+
+
+
+// utils
+void	ft_putchar_fd(char c, int fd);
+void	ft_putstr_fd(char *s, int fd);
+unsigned int ft_my_time(void);
 
 #endif
