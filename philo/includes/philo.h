@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:12:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/25 23:36:25 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:52:59 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,28 @@ typedef struct s_info t_info;
 
 typedef struct s_philo
 {
-    unsigned int	id;
-    pthread_t 		theread_id;		
-    pthread_mutex_t	*rigth_fork;
-	pthread_mutex_t	*left_fork;
-    unsigned int 	time_last_meal;
-    unsigned int	meals_eaten;
-   t_info 			*table; // TODO tirar ?
+    int	id;
+    pthread_t 			theread_id;		
+    pthread_mutex_t		*rigth_fork;
+	pthread_mutex_t		*left_fork;
+    int 				time_last_meal;
+    int					meals_eaten;
+   	t_info 				*table; // TODO tirar ?
 } t_philo;
 
 typedef struct s_info
 {
-	unsigned int	start_time;
-	unsigned int	nbr_of_philos;
-	unsigned int	time_to_die;
-	unsigned int	time_to_eat;
-	unsigned int	time_to_sleep;
-	unsigned int	nbr_of_meals;
-	unsigned int	died;  // TODO ou passar para int;
-	unsigned int	all_eaten;
+	size_t			start_time;
+	int				nbr_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				time_to_think;
+	int				nbr_of_meals;
+	int				died;  // TODO ou passar para int;
+	int				all_eaten;
 	t_philo			*philos;
-	pthread_mutex_t	*forks;
+	pthread_mutex_t	*forks; // mesmo numero que philos
 }               t_info;
 
 
