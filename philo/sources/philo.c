@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:30:56 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/26 16:05:18 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/26 21:17:02 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 int main(int argc, char *argv[])
 {
     t_info table; 
-    // t_philo *philos; // apagar
-    //pthread_mutex_t *forks; // apagar
+
     (void)argv;
     
     if (argc != 5 && argc != 6)
@@ -25,40 +24,42 @@ int main(int argc, char *argv[])
         ft_putstr_fd("ERROR: Wrong number of elements\n", 2);
         return (0); // nao podes usar o exit
     }
-    // clean_mem();
-    // check_args;
-        // check num of philos
-    // init_table(&table, argv);
-    // init_forks
+    clean_mem(&table);
+	if(init_table(argc, argv, &table))
+		return(0);
+	//printf("%d", table.nbr_philos);
+    if(!init_forks(&table))
+		return(0);
     // philos = malloc(sizeof(table->philo) * table->nbr_of_philos)); // dentro do create philos
     // create_philos(table);   
     // init_threads
     //
-    // 
-    return (0);
+    return(0);
 }
 
-// void init_table(t)
 
 /*
 ! [] IMPORTANTE 
 	TODO [] exit is not allowed;
+	[] getter - pesquisar
+	[] setter - pesquisar
 
-[] clean initial memory;
-[] check args (parsing) and // TODO init table
-	[] check nbr of philos
-		[]if nbr_philos == 1
-			[] wait x time and return(0); // ?
-	[] atoi for only positiv numbers;
-	[] check args > 0 && time_to_sleep >= 0;
+[x] clean initial memory;
+[x] check args[] check nbr of philos (parsing) and // TODO init table
+	[x] check nbr of philos
+		[x]if nbr_philos == 1
+			[x] wait x time and return(0); // ?
+	[x] atoi for only positiv numbers;
+	[x] check args > 0 && time_to_sleep >= 0;
 	// [] //TODO (get_my_time) ?
 
 // [] init_table
 // 	[] start_time ? //! (get_my_time)
 //  	[] args na info 
 [] init_forks
-	[] malloc sizof(mutex) * nrb_philos;
-	[] mutex forks;
+	[x] malloc sizof(mutex) * nrb_philos;
+	[x] while
+		[x] mutex forks[i];
 
 philos = malloc(sizeof(table->philo) * table->nbr_of_philos));
 [] create philos
@@ -73,7 +74,7 @@ philos = malloc(sizeof(table->philo) * table->nbr_of_philos));
 					l_forke[nrb_philos];
 
 [] init_threads; //? dentro do create philos? //
-	[] create routine function //* in philo_utils.c
+	[] create routine function  in philo_utils.c
 		? What each philosopher has to do ? In which order ?
 		[] consider:
 			[] impar and par
@@ -82,6 +83,7 @@ philos = malloc(sizeof(table->philo) * table->nbr_of_philos));
 	   [] eat
 	   		[] time_last_meal  init when we starts to eat
 			[] meals_eaten++;
+			[] philo_eaten ++ ?;
 	   [] sleep
 	   [] think /shit
 	   [] repeat

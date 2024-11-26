@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 21:01:34 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/25 23:41:17 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/26 20:49:11 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,3 +37,44 @@ unsigned int ft_my_time(void)
 	time = tv.tv_sec * 1000 + tv.tv_usec/1000;
 	return(time);
 }
+
+void clean_mem(t_info *table)
+{
+	table->start_time = 0;
+	table->nbr_philos = 0;
+	table->time_to_die = 0;
+	table->time_to_eat = 0;
+	table->time_to_sleep= 0;
+	table->time_to_think = 0;
+	table->nbr_of_meals = 0;
+	table->died = 0;
+	table->philo_eaten = 0;
+	table->philos = NULL;
+	table->forks = NULL;
+	table->monitor = 0;
+}
+int	ft_atoi(const char *nptr)
+{
+	int	i;
+	int	neg;
+	int	final_nr;
+
+	neg = 1;
+	final_nr = 0;
+	i = 0;
+	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
+		i++;
+	if (nptr[i] == '-' || nptr[i] == '+')
+	{
+		if (nptr[i] == '-')
+			neg *= -1;
+		i++;
+	}
+	while ((nptr[i] >= '0' && nptr[i] <= '9'))
+	{
+		final_nr = (final_nr * 10) + (nptr[i] - '0');
+		i++;
+	}
+	return (final_nr * neg);
+}
+

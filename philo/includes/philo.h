@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:12:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/26 14:52:59 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/26 21:15:38 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct s_philo
 {
     int	id;
     pthread_t 			theread_id;		
-    pthread_mutex_t		*rigth_fork;
-	pthread_mutex_t		*left_fork;
+    pthread_mutex_t		*one_fork;
+	pthread_mutex_t		*two_fork;
     int 				time_last_meal;
     int					meals_eaten;
    	t_info 				*table; // TODO tirar ?
@@ -49,18 +49,27 @@ typedef struct s_info
 	int				time_to_sleep;
 	int				time_to_think;
 	int				nbr_of_meals;
-	int				died;  // TODO ou passar para int;
-	int				all_eaten;
+	int				died;   		// mutex ?
+	int				philo_eaten; 	// mutex ??
 	t_philo			*philos;
-	pthread_mutex_t	*forks; // mesmo numero que philos
+	pthread_mutex_t	*forks;
+	pthread_t		monitor; // mesmo numero que philos
 }               t_info;
 
 
+// 
+
+// inits
+int init_table(int argc, char *argv[], t_info *table);
+int init_forks(t_info *table);
 
 
 // utils
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 unsigned int ft_my_time(void);
+void clean_mem(t_info *table);
+int	ft_atoi(const char *nptr);
+
 
 #endif
