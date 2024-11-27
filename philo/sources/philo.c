@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:30:56 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/27 16:36:46 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:37:11 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char *argv[])
 	}
 	clean_mem(&table);
 	if (check_args(argc, argv) == -1 || init_table(argc, argv, &table) == -1
-		|| init_forks(&table) == -1)
+		|| init_forks_and_monitor(&table) == -1)
 		return (0); // messagem de erro ?
 	table.philos = malloc(sizeof(t_philo) * table.nbr_philos);
 	if (!table.philos)
@@ -75,18 +75,18 @@ int	main(int argc, char *argv[])
 [] init_threads; //? dentro do create philos? //
 	[] create routine function  in philo_utils.c
 		? What each philosopher has to do ? In which order ?
-		[] consider:
-			[] impar and par
-			[] mutex lock
-			[] mutex unlock
-		[] eat
-			[] time_last_meal  init when we starts to eat
-			[] meals_eaten++;
+		[x] consider:
+			[x] impar and par
+			[x] mutex lock
+			[x] mutex unlock
+		[x] eat
+			[x] time_last_meal  init when we starts to eat
+			[x] meals_eaten++;
 			[] philo_eaten ++ ?;
-		[] sleep
-		[] think /shit
-		[] repeat
-		[] printf
+		[x] sleep
+		[x] think /shit
+		[x] repeat
+		[x] printf
 	[x] start_time ? //! (get_my_time)
 	[x] while(nrb_philos)
 		[x] p_thread_create(table->philo->theread_id, routine, table->philo);

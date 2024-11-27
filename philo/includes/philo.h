@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:12:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/27 16:41:01 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:36:22 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ typedef struct s_info
 	int				time_to_sleep;
 	int				time_to_think;
 	int				nbr_of_meals;
-	int				died;   		// mutex ?
-	int				philo_eaten; 	// mutex ??
-	t_philo			*philos;
+	// int				philo_eaten; 	// mutex ??
 	pthread_mutex_t	*forks; // mesmo numero que philos
+	t_philo			*philos;
+	int				extermination;   	
+	pthread_mutex_t life;
 	pthread_t		monitor; 
 }               t_info;
 
@@ -62,12 +63,14 @@ typedef struct s_info
 // inits
 int check_args(int argc, char *argv[]);
 int init_table(int argc, char *argv[], t_info *table);
-int init_forks(t_info *table);
+int init_forks_and_monitor(t_info *table);
 void create_philos(t_info *table);
 int init_threads(t_info *table);
 
 // routines
 int threads_union(t_info *table);
+void *life_routine(t_philo *philo);
+void *death_routine(t_info *table);
 
 // utils
 void	ft_putchar_fd(char c, int fd);
