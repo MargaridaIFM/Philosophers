@@ -6,40 +6,36 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:30:56 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/26 21:17:02 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:41:53 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-    t_info table; 
+	t_info	table;
 
-    (void)argv;
-    
-    if (argc != 5 && argc != 6)
-    {
-        ft_putstr_fd("ERROR: Wrong number of elements\n", 2);
-        return (0); // nao podes usar o exit
-    }
-    clean_mem(&table);
-	if(init_table(argc, argv, &table))
-		return(0);
-	//printf("%d", table.nbr_philos);
-    if(!init_forks(&table))
-		return(0);
-    // philos = malloc(sizeof(table->philo) * table->nbr_of_philos)); // dentro do create philos
-    // create_philos(table);   
-    // init_threads
-    //
-    return(0);
+	if (argc != 5 && argc != 6)
+	{
+		ft_putstr_fd("ERROR: Wrong number of elements\n", 2);
+		return (0); // nao podes usar o exit
+	}
+	clean_mem(&table);
+	if (check_args(argc, argv) == -1 || init_table(argc, argv, &table) == -1
+		|| init_forks(&table) == -1)
+		return (0); // messagem de erro ?
+	table.philos = malloc(sizeof(table.philos) * table.nbr_philos);
+	if (!table.philos)
+		return (0); // mesagem de erro ?
+	create_philos(&table);
+	// if (init_threads(&table) == -1)
+	// 	return (0);
+	return (0);
 }
 
-
 /*
-! [] IMPORTANTE 
+! [] IMPORTANTE
 	TODO [] exit is not allowed;
 	[] getter - pesquisar
 	[] setter - pesquisar
@@ -55,23 +51,25 @@ int main(int argc, char *argv[])
 
 // [] init_table
 // 	[] start_time ? //! (get_my_time)
-//  	[] args na info 
+//  	[] args na info
 [] init_forks
 	[x] malloc sizof(mutex) * nrb_philos;
 	[x] while
 		[x] mutex forks[i];
 
-philos = malloc(sizeof(table->philo) * table->nbr_of_philos));
+[x]philos = malloc(sizeof(table->philo) * table->nbr_of_philos));
 [] create philos
-	[] while()
-		[]id = idx
-		[] info 0;
-		[] pointer p a table;
-		[]  fork assigment - mutex rigth and left 
-			[] pointer p r_fork; - forks[nbr_philos] + 1;
-			[] pointer p l_fork; - forks[nbr_philos] - 1;
-				[]if philo = 0
-					l_forke[nrb_philos];
+	[x] while()
+		[x]id = idx
+		[x] info 0;
+		[x] pointer p a table;
+		[]  fork assigment - mutex rigth and left
+				[x]if philo = 0
+					[x]two_fork[nrb_philos];
+				[x]else
+					[x] pointer p two_fork; - forks[nbr_philos] + 1;
+			[x] pointer p one_fork; - forks[nbr_philos] - 1;
+
 
 [] init_threads; //? dentro do create philos? //
 	[] create routine function  in philo_utils.c
@@ -79,25 +77,25 @@ philos = malloc(sizeof(table->philo) * table->nbr_of_philos));
 		[] consider:
 			[] impar and par
 			[] mutex lock
-			[] mutex unlock 
-	   [] eat
-	   		[] time_last_meal  init when we starts to eat
+			[] mutex unlock
+		[] eat
+			[] time_last_meal  init when we starts to eat
 			[] meals_eaten++;
 			[] philo_eaten ++ ?;
-	   [] sleep
-	   [] think /shit
-	   [] repeat
-	   [] printf
-	[] start_time ? //! (get_my_time)
-	[] while(nrb_philos)
-		[] p_thread_create(table->philo->theread_id, routine, table->philo);
-	[] p_thread_create(..., death_routine)
+		[] sleep
+		[] think /shit
+		[] repeat
+		[] printf
+	[x] start_time ? //! (get_my_time)
+	[x] while(nrb_philos)
+		[x] p_thread_create(table->philo->theread_id, routine, table->philo);
+	[x] p_thread_create(..., death_routine)
 
 []check_is_alive - death_routine)
-	[] new routine 
+	[] new routine
 	[] mutex lock;
 	[] mutex unlock;
-	[] call a function to check if the philo eat 
+	[] call a function to check if the philo eat
 	[] call to check is alive;
 
 [] ? - threads_join
@@ -112,34 +110,33 @@ philos = malloc(sizeof(table->philo) * table->nbr_of_philos));
 	[] distroy mustex forks;
 */
 
-
-/* 
+/*
 Core concepts:
-    [] process vs threads
-    [] threads
-    [] mutexes
-    bonus:
-        [] semaphores
+	[] process vs threads
+	[] threads
+	[] mutexes
+	bonus:
+		[] semaphores
 
 [] #define ERROR_MSG;
 [] structs:
-    [] philo  - principal
-        [x] id (number);
-        [x] p_thread 
-        [x] mutex rigth_fork;
-        [x] mutex left_fork;
-        [x] time_last_meal;
-        [x] meals_eaten ?;
-        [x] t_info *info;
-         
-    [X] info
-        [x] start_time;
-        [x] nbr_of_philo;
-        [x] time_to_die;
-        [x] time_to_eat;
-        [x] time_to_sleep;
-        [x] nbr_of_meals;
-        [x] int died ?;
-        [x] int all_eaten ;
-        
+	[] philo  - principal
+		[x] id (number);
+		[x] p_thread
+		[x] mutex rigth_fork;
+		[x] mutex left_fork;
+		[x] time_last_meal;
+		[x] meals_eaten ?;
+		[x] t_info *info;
+
+	[X] info
+		[x] start_time;
+		[x] nbr_of_philo;
+		[x] time_to_die;
+		[x] time_to_eat;
+		[x] time_to_sleep;
+		[x] nbr_of_meals;
+		[x] int died ?;
+		[x] int all_eaten ;
+
 */

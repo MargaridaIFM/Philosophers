@@ -17,7 +17,7 @@ OBJ_DIR			=	objs/
 
 RANDOM_MALLOC	=	-Xlinker --wrap=malloc
 
-SRC				=	$(addprefix $(SRC_DIR), philo.c philo_utils.c inits.c) \
+SRC				=	$(addprefix $(SRC_DIR), philo.c philo_utils.c inits.c errors.c) \
 				#	$(addprefix $(SRC_DIR), malloc.c) \
 
 OBJ_DIRS		=	$(OBJ_DIR) $(addprefix $(OBJ_DIR), $(SRC_DIR)) 

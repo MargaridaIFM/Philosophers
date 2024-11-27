@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:12:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/26 21:15:38 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:25:22 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_info t_info;
 
 typedef struct s_philo
 {
-    int	id;
+    int					id;
     pthread_t 			theread_id;		
     pthread_mutex_t		*one_fork;
 	pthread_mutex_t		*two_fork;
@@ -52,16 +52,19 @@ typedef struct s_info
 	int				died;   		// mutex ?
 	int				philo_eaten; 	// mutex ??
 	t_philo			*philos;
-	pthread_mutex_t	*forks;
-	pthread_t		monitor; // mesmo numero que philos
+	pthread_mutex_t	*forks; // mesmo numero que philos
+	pthread_t		monitor; 
 }               t_info;
 
 
 // 
 
 // inits
+int check_args(int argc, char *argv[]);
 int init_table(int argc, char *argv[], t_info *table);
 int init_forks(t_info *table);
+void create_philos(t_info *table);
+int init_threads(t_info *table);
 
 
 // utils
@@ -70,6 +73,12 @@ void	ft_putstr_fd(char *s, int fd);
 unsigned int ft_my_time(void);
 void clean_mem(t_info *table);
 int	ft_atoi(const char *nptr);
+
+// errorr
+void free_all(t_info *table);
+void free_philos(t_info *table);
+void free_forks(t_info *table);
+
 
 
 #endif
