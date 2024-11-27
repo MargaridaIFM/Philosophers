@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:30:56 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/27 15:41:53 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:36:46 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ int	main(int argc, char *argv[])
 	if (check_args(argc, argv) == -1 || init_table(argc, argv, &table) == -1
 		|| init_forks(&table) == -1)
 		return (0); // messagem de erro ?
-	table.philos = malloc(sizeof(table.philos) * table.nbr_philos);
+	table.philos = malloc(sizeof(t_philo) * table.nbr_philos);
 	if (!table.philos)
 		return (0); // mesagem de erro ?
 	create_philos(&table);
-	// if (init_threads(&table) == -1)
-	// 	return (0);
+	if (init_threads(&table) == -1)
+	 	return (0);
+	free_all(&table);
 	return (0);
 }
 
@@ -102,12 +103,12 @@ int	main(int argc, char *argv[])
 	[]while(nbr_philos);
 		[]p_thread_join();
 
-[] free
-	[] philo
-		[] r_fokr;
-		[] l_fork;
-		[] *info;
-	[] distroy mustex forks;
+[x] free
+	[x] philo
+		[x] r_fokr;
+		[x] l_fork;
+		[x] *info;
+	[x] distroy mustex forks;
 */
 
 /*

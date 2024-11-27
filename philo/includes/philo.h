@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:12:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/27 15:25:22 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:41:01 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int init_forks(t_info *table);
 void create_philos(t_info *table);
 int init_threads(t_info *table);
 
+// routines
+int threads_union(t_info *table);
 
 // utils
 void	ft_putchar_fd(char c, int fd);

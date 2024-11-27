@@ -6,24 +6,24 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:14:55 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/27 15:40:40 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:47:58 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int check_args(int argc, char *argv[])
+int	check_args(int argc, char *argv[])
 {
-	int i;
-	int j;
-	
+	int	i;
+	int	j;
+
 	i = 1;
 	while (i < argc)
 	{
 		j = 0;
 		while (argv[i][j])
 		{
-			if (argv[i][j] >= '0' && argv[i][j] <= '9') 
+			if (argv[i][j] >= '0' && argv[i][j] <= '9')
 				j++;
 			else
 			{
@@ -43,18 +43,18 @@ int	init_table(int argc, char *argv[], t_info *table)
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		table->nbr_of_meals = ft_atoi(argv[5]);
-	if (table->time_to_die == 0 || table->nbr_of_meals == 0)
-		return (-1);
-	if (table->time_to_eat == 0 || table->time_to_sleep < 0)
-		return (-1);
-	if (table->nbr_philos < 1)
-		return (-1);
-	else if (table->nbr_philos == 1)
 	{
-		printf("0 1 was taken a fork\n");
+		table->nbr_of_meals = ft_atoi(argv[5]);
+		if (table->nbr_of_meals == 0)
+			return (-1);
+	}
+	if (table->time_to_die == 0 || table->time_to_eat == 0
+		|| table->time_to_sleep == 0 || table->nbr_philos < 1)
+		return (-1);
+	if (table->nbr_philos == 1)
+	{
 		usleep(table->time_to_die * 1000);
-		printf("%d 1 died\n", table->time_to_die);
+		printf("0 1 was taken a fork\n%d 1 died\n", table->time_to_die);
 		return (-1);
 	}
 	else if (table->nbr_philos % 2 != 0)
@@ -88,8 +88,10 @@ void	create_philos(t_info *table)
 	int	idx;
 
 	idx = 0;
+	// printf("nbr of philos %d\n", table->nbr_philos);
 	while (table->nbr_philos > idx)
 	{
+		// printf("Aqui %d\n", idx);
 		table->philos[idx].id = idx + 1;
 		table->philos[idx].meals_eaten = 0;
 		table->philos[idx].time_last_meal = 0;
@@ -103,32 +105,31 @@ void	create_philos(t_info *table)
 		idx++;
 	}
 }
-// int init_threads(t_info *table)
-// {
+int init_threads(t_info *table)
+{
+	int i;
 
-// 	int i;
-
-// 	i = 0;
-// 	table->start_time = ft_my_time();
-// 	while(i < table->nbr_philos)
-// 	{
-// 		if (pthread_create(table->philos[i].theread_id, NULL, &life_rotine, (void)table->philos[i]) != 0)
-// 		{
-// 			printf("ERROR: Failed creating thread for philos\n");
-// 			return (-1);
-// 		}
-// 	}
-// 	if(pthread_create(table->monitor, NULL, &death_rotine, (void)table) !=  0)
-// 		{
-// 			//free_all(table);
-// 			printf("ERROR: Failed creating thread for monitot\n");
-// 			return (-1);
-// 		}
-// 	return (0);
-// }
-
-
-
+	i = 0;
+	table->start_time = ft_my_time();
+	while(i < table->nbr_philos)
+	{
+		if (pthread_create(table->philos[i].theread_id, NULL, &life_rotine,
+				(void)table->philos[i]) != 0)
+		{
+			printf("ERROR: Failed creating thread for philos\n");
+			return (-1);
+		}
+	}
+	if(pthread_create(table->monitor, NULL, &death_rotine, (void)table) !=  0)
+		{
+			free_all(table);
+			printf("ERROR: Failed creating thread for monitot\n");
+			return (-1);
+		}
+	if(threads_union(table) == -1)
+		return (-1);
+	return (0);
+}
 
 // void create_philos(t_info *table)
 // {
