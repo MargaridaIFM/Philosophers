@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:12:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/27 19:36:22 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:46:22 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_info
 	int				time_to_sleep;
 	int				time_to_think;
 	int				nbr_of_meals;
-	// int				philo_eaten; 	// mutex ??
+	int				philos_eaten; 	
 	pthread_mutex_t	*forks; // mesmo numero que philos
 	t_philo			*philos;
 	int				extermination;   	

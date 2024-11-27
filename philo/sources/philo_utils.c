@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 21:01:34 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/27 19:37:03 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:46:48 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void clean_mem(t_info *table)
 	table->time_to_think = 0;
 	table->nbr_of_meals = 0;
 	table->extermination = 0;
+	table->philos_eaten = 0;
 	table->philos = NULL;
 	table->forks = NULL;
 	table->monitor = 0;
