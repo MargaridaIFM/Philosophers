@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:14:55 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/27 20:12:47 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/28 22:13:28 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,17 @@ int	init_forks_and_monitor(t_info *table)
 	}
 	while (table->nbr_philos > i)
 	{
-		if(pthread_mutex_init(&table->forks[i], NULL) != 0)
+		if (pthread_mutex_init(&table->forks[i], NULL) != 0)
 		{
 			ft_putstr_fd("ERROR: Failed creating mutex\n", 2);
 			return (-1);
 		}
 		i++;
 	}
-	if(pthread_mutex_init(&table->life, NULL) != 0)
+	if (pthread_mutex_init(&table->life, NULL) != 0)
 	{
-			ft_putstr_fd("ERROR: Failed creating mutex\n", 2);
-			return (-1);
+		ft_putstr_fd("ERROR: Failed creating mutex\n", 2);
+		return (-1);
 	}
 	return (0);
 }
@@ -114,32 +114,32 @@ void	create_philos(t_info *table)
 		idx++;
 	}
 }
-int init_threads(t_info *table)
+int	init_threads(t_info *table)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	table->start_time = ft_my_time();
 	pthread_mutex_lock(&table->life);
-	while(i < table->nbr_philos)
+	while (i < table->nbr_philos)
 	{
 		if (pthread_create(table->philos[i].theread_id, NULL, &life_routine,
-				(void)table->philos[i]) != 0)
+				(void *)table->philos[i]) != 0)
 		{
 			printf("ERROR: Failed creating thread for philos\n");
 			return (-1);
 		}
 	}
-	if(pthread_create(table->monitor, NULL, &death_routine, (void *)table) !=  0)
-		{
-			free_all(table);
-			printf("ERROR: Failed creating thread for monitot\n");
-			return (-1);
-		}
-	pthread_mutex_unlock(&table->life);
-	if(threads_union(table) == -1)
+	if (pthread_create(table->monitor, NULL, &death_routine,
+			(void *)table) != 0)
+	{
+		free_all(table);
+		printf("ERROR: Failed creating thread for monitot\n");
 		return (-1);
-
+	}
+	pthread_mutex_unlock(&table->life);
+	if (threads_union(table) == -1)
+		return (-1);
 	return (0);
 }
 

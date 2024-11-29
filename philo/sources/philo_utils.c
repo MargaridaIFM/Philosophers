@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 21:01:34 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/27 20:46:48 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/28 22:12:16 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,23 @@ void	ft_putstr_fd(char *s, int fd)
 		idx++;
 	}
 }
-unsigned int ft_my_time(void)
+unsigned int	ft_my_time(void)
 {
-	unsigned int time;
-	struct timeval tv;
+	unsigned int	time;
+	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	time = tv.tv_sec * 1000 + tv.tv_usec/1000;
-	return(time);
+	time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (time);
 }
 
-void clean_mem(t_info *table)
+void	clean_mem(t_info *table)
 {
 	table->start_time = 0;
 	table->nbr_philos = 0;
 	table->time_to_die = 0;
 	table->time_to_eat = 0;
-	table->time_to_sleep= 0;
+	table->time_to_sleep = 0;
 	table->time_to_think = 0;
 	table->nbr_of_meals = 0;
 	table->extermination = 0;
@@ -77,4 +77,3 @@ int	ft_atoi(const char *nptr)
 	}
 	return (final_nr * neg);
 }
-

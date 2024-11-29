@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:30:56 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/27 19:37:11 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/28 22:12:28 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ int	main(int argc, char *argv[])
 		return (0); // mesagem de erro ?
 	create_philos(&table);
 	if (init_threads(&table) == -1)
-	 	return (0);
+		return (0);
 	free_all(&table);
 	return (0);
 }
-
+//! acrescentar:
+//!  pthread_mutex_destroy(&table->life);
 /*
 ! [] IMPORTANTE
 	TODO [] exit is not allowed;
