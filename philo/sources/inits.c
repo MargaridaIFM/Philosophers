@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:14:55 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/29 14:50:18 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:29:16 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,14 +123,15 @@ int	init_threads(t_info *table)
 	pthread_mutex_lock(&table->life);
 	while (i < table->nbr_philos)
 	{
-		if (pthread_create(table->philos[i].theread_id, NULL, &life_routine, (void *)table->philos[i]) != 0)
+		if (pthread_create(&table->philos[i].theread_id, NULL, &life_routine, &table->philos[i]) != 0)
 		{
 			printf("ERROR: Failed creating thread for philos\n");
 			return (-1);
 		}
+		i++;
 	}
 	if (pthread_create(&table->monitor, NULL, &death_routine,
-			(void *)table) != 0)
+			table) != 0)
 	{
 		free_all(table);
 		printf("ERROR: Failed creating thread for monitot\n");

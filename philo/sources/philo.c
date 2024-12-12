@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:30:56 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/28 22:12:28 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:37:01 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(int argc, char *argv[])
 }
 //! acrescentar:
 //!  pthread_mutex_destroy(&table->life);
+
 /*
 ! [] IMPORTANTE
 	TODO [] exit is not allowed;

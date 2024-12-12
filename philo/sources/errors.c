@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:53:22 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/28 22:12:20 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:05:13 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	free_all(t_info *table)
 void	free_philos(t_info *table)
 {
 	int	i;
-
+	
+	i = 0;
 	while (i < table->nbr_philos)
 	{
 		table->philos[i].one_fork = NULL;
@@ -37,6 +38,8 @@ void	free_philos(t_info *table)
 void	free_forks(t_info *table)
 {
 	int i;
+
+	i = 0;
 	while (i < table->nbr_philos)
 	{
 		pthread_mutex_destroy(&table->forks[i]);

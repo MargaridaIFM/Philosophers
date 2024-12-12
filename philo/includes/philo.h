@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:12:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/27 20:46:22 by mfrancis         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:23:32 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,9 @@ int init_threads(t_info *table);
 
 // routines
 int threads_union(t_info *table);
-void *life_routine(t_philo *philo);
-void *death_routine(t_info *table);
+void *life_routine(void *philo);
+void *death_routine(void *table);
+// int	philos_all_eaten(t_info *table);
 
 // utils
 void	ft_putchar_fd(char c, int fd);
