@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:14:55 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/29 15:29:16 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/10 17:48:23 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,21 @@ int	init_table(int argc, char *argv[], t_info *table)
 		printf("0 1 was taken a fork\n%d 1 died\n", table->time_to_die);
 		return (-1);
 	}
-	else if (table->nbr_philos % 2 != 0)
-		table->time_to_think = 0.2 * ((2 * table->time_to_eat)
-				- table->time_to_sleep);
-	else if (table->time_to_eat > table->time_to_sleep)
-		table->time_to_think = table->time_to_eat - table->time_to_sleep;
+	else if (table->nbr_philos % 2 == 0)
+	{
+		if(table->time_to_eat > table->time_to_sleep)
+			table->time_to_think = table->time_to_eat - table->time_to_sleep;
+		else
+			table->time_to_think = 0;
+	}
+	else
+	{
+		if(table->time_to_eat * 2 > table->time_to_sleep)
+			table->time_to_think = table->time_to_eat * 2 - table->time_to_sleep;
+		else
+			table->time_to_think = 0;
+	}
+
 	return (0);
 }
 int	init_forks_and_monitor(t_info *table)
@@ -85,6 +95,11 @@ int	init_forks_and_monitor(t_info *table)
 		i++;
 	}
 	if (pthread_mutex_init(&table->life, NULL) != 0)
+	{
+		ft_putstr_fd("ERROR: Failed creating mutex\n", 2);
+		return (-1);
+	}
+	if (pthread_mutex_init(&table->print, NULL) != 0)
 	{
 		ft_putstr_fd("ERROR: Failed creating mutex\n", 2);
 		return (-1);
@@ -125,6 +140,7 @@ int	init_threads(t_info *table)
 	{
 		if (pthread_create(&table->philos[i].theread_id, NULL, &life_routine, &table->philos[i]) != 0)
 		{
+			free_all(table);
 			printf("ERROR: Failed creating thread for philos\n");
 			return (-1);
 		}

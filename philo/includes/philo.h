@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:12:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/29 15:23:32 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/10 17:41:38 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ typedef struct s_info
 	int				philos_eaten; 	
 	pthread_mutex_t	*forks; // mesmo numero que philos
 	t_philo			*philos;
-	int				extermination;   	
+	int				extermination; 
+	pthread_mutex_t print;  	
 	pthread_mutex_t life;
 	pthread_t		monitor; 
 }               t_info;
