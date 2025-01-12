@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:53:22 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/29 15:05:13 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/12 09:35:11 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	free_all(t_info *table)
 	if (table->forks)
 		free_forks(table);
 	pthread_mutex_destroy(&table->life);
+	pthread_mutex_destroy(&table->print);
 }
 void	free_philos(t_info *table)
 {

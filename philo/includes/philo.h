@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:12:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/10 17:41:38 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/12 09:35:22 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ typedef struct s_info
 // inits
 int check_args(int argc, char *argv[]);
 int init_table(int argc, char *argv[], t_info *table);
-int init_forks_and_monitor(t_info *table);
+int init_forks(t_info *table);
+int init_monitor(t_info *table);
 void create_philos(t_info *table);
 int init_threads(t_info *table);
 

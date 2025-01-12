@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:14:55 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/10 17:48:23 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/12 09:35:57 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	init_table(int argc, char *argv[], t_info *table)
 
 	return (0);
 }
-int	init_forks_and_monitor(t_info *table)
+int	init_forks(t_info *table)
 {
 	int	i;
 
@@ -94,6 +94,10 @@ int	init_forks_and_monitor(t_info *table)
 		}
 		i++;
 	}
+	return (0);
+}
+int	init_monitor(t_info *table)
+{
 	if (pthread_mutex_init(&table->life, NULL) != 0)
 	{
 		ft_putstr_fd("ERROR: Failed creating mutex\n", 2);
@@ -159,39 +163,3 @@ int	init_threads(t_info *table)
 	return (0);
 }
 
-// void create_philos(t_info *table)
-// {
-// 	int idx;
-
-// 	idx = 1;
-// 	while(table->nbr_philos >= idx)
-// 	{
-// 		table->philos[idx - 1].id = idx;
-// 		printf("id: %d\n", table->philos[idx - 1].id);
-
-// 		table->philos[idx - 1 ].meals_eaten = 0;
-// 		printf("meals eaten: %d\n", table->philos[idx - 1].meals_eaten);
-// 		table->philos[idx - 1].time_last_meal = 0;
-// 		printf("time last meal: %d\n", table->philos[idx-1].time_last_meal);
-// 		table->philos[idx - 1].table = table;
-// 		//printf("table pointer philo: %p\n", table->philos[idx-1].table);
-// 		//printf("table pointer: %p\n", table);
-// 		table->philos[idx - 1].theread_id = 0;
-// 		printf("thread_id: %lu\n", table->philos[idx-1].theread_id);
-// 		if(table->philos[idx - 1].id == 1)
-// 		{
-// 			table->philos[0].two_fork = &table->forks[table->nbr_philos - 1];
-// 			printf("pointer fork two: %p\n", &table->forks[table->nbr_philos
-//				- 1]);
-//
-// 		}
-// 		else
-// 		{
-// 			table->philos[idx - 1].two_fork = &table->forks[idx - 2];
-// 			printf("pointer fork two: %p\n", &table->forks[idx - 2]);
-// 		}
-// 		table->philos[idx - 1].one_fork = &table->forks[idx - 1];
-// 		printf("pointer fork one: %p\n", &table->forks[idx - 1]);
-// 		idx++;
-// 	}
-// }

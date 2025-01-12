@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:30:56 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/10 17:34:01 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/12 09:35:16 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,23 @@ int	main(int argc, char *argv[])
 	}
 	clean_mem(&table);
 	if (check_args(argc, argv) == -1 || init_table(argc, argv, &table) == -1
-		|| init_forks_and_monitor(&table) == -1)
+		|| init_forks(&table) == -1 || init_monitor(&table)== -1)
 		{
 			free_all(&table);
 			return (0); // messagem de erro ?
 		}
 	table.philos = malloc(sizeof(t_philo) * table.nbr_philos);
 	if (!table.philos)
+	{ 
+		free_all(&table);
 		return (0); // mesagem de erro ?
+	}
 	create_philos(&table);
 	if (init_threads(&table) == -1)
+	{
+		free_all(&table);
 		return (0);
+	}
 	free_all(&table);
 	return (0);
 }
