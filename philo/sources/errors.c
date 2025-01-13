@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:53:22 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/12 09:35:11 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/12 10:47:34 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ void	free_all(t_info *table)
 	pthread_mutex_destroy(&table->life);
 	pthread_mutex_destroy(&table->print);
 }
+
 void	free_philos(t_info *table)
 {
-	int	i;
-	
+	unsigned int	i;
+
 	i = 0;
 	while (i < table->nbr_philos)
 	{
@@ -38,7 +39,7 @@ void	free_philos(t_info *table)
 
 void	free_forks(t_info *table)
 {
-	int i;
+	unsigned int	i;
 
 	i = 0;
 	while (i < table->nbr_philos)

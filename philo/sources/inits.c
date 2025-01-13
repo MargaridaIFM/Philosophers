@@ -6,35 +6,11 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:14:55 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/12 09:35:57 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/12 10:45:37 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-int	check_args(int argc, char *argv[])
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (i < argc)
-	{
-		j = 0;
-		while (argv[i][j])
-		{
-			if (argv[i][j] >= '0' && argv[i][j] <= '9')
-				j++;
-			else
-			{
-				ft_putstr_fd("ERROR: Invalid format!\n", 2);
-				return (-1);
-			}
-		}
-		i++;
-	}
-	return (0);
-}
 
 int	init_table(int argc, char *argv[], t_info *table)
 {
@@ -59,24 +35,25 @@ int	init_table(int argc, char *argv[], t_info *table)
 	}
 	else if (table->nbr_philos % 2 == 0)
 	{
-		if(table->time_to_eat > table->time_to_sleep)
+		if (table->time_to_eat > table->time_to_sleep)
 			table->time_to_think = table->time_to_eat - table->time_to_sleep;
 		else
 			table->time_to_think = 0;
 	}
 	else
 	{
-		if(table->time_to_eat * 2 > table->time_to_sleep)
-			table->time_to_think = table->time_to_eat * 2 - table->time_to_sleep;
+		if (table->time_to_eat * 2 > table->time_to_sleep)
+			table->time_to_think = table->time_to_eat * 2
+				- table->time_to_sleep;
 		else
 			table->time_to_think = 0;
 	}
-
 	return (0);
 }
+
 int	init_forks(t_info *table)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->nbr_philos);
@@ -96,6 +73,7 @@ int	init_forks(t_info *table)
 	}
 	return (0);
 }
+
 int	init_monitor(t_info *table)
 {
 	if (pthread_mutex_init(&table->life, NULL) != 0)
@@ -113,13 +91,11 @@ int	init_monitor(t_info *table)
 
 void	create_philos(t_info *table)
 {
-	int	idx;
+	unsigned int	idx;
 
 	idx = 0;
-	// printf("nbr of philos %d\n", table->nbr_philos);
 	while (table->nbr_philos > idx)
 	{
-		// printf("Aqui %d\n", idx);
 		table->philos[idx].id = idx + 1;
 		table->philos[idx].meals_eaten = 0;
 		table->philos[idx].time_last_meal = 0;
@@ -133,16 +109,18 @@ void	create_philos(t_info *table)
 		idx++;
 	}
 }
+
 int	init_threads(t_info *table)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	table->start_time = ft_my_time();
 	pthread_mutex_lock(&table->life);
 	while (i < table->nbr_philos)
 	{
-		if (pthread_create(&table->philos[i].theread_id, NULL, &life_routine, &table->philos[i]) != 0)
+		if (pthread_create(&table->philos[i].theread_id, NULL, &life_routine,
+				&table->philos[i]) != 0)
 		{
 			free_all(table);
 			printf("ERROR: Failed creating thread for philos\n");
@@ -150,8 +128,7 @@ int	init_threads(t_info *table)
 		}
 		i++;
 	}
-	if (pthread_create(&table->monitor, NULL, &death_routine,
-			table) != 0)
+	if (pthread_create(&table->monitor, NULL, &death_routine, table) != 0)
 	{
 		free_all(table);
 		printf("ERROR: Failed creating thread for monitot\n");
@@ -159,7 +136,9 @@ int	init_threads(t_info *table)
 	}
 	pthread_mutex_unlock(&table->life);
 	if (threads_union(table) == -1)
+	{
+		free_all(table);
 		return (-1);
+	}
 	return (0);
 }
-

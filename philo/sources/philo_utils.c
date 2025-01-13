@@ -6,16 +6,11 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 21:01:34 by mfrancis          #+#    #+#             */
-/*   Updated: 2024/11/28 22:12:16 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/12 10:41:30 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-void	ft_putchar_fd(char c, int fd)
-{
-	write(fd, &c, 1);
-}
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -28,6 +23,7 @@ void	ft_putstr_fd(char *s, int fd)
 		idx++;
 	}
 }
+
 unsigned int	ft_my_time(void)
 {
 	unsigned int	time;
@@ -53,11 +49,12 @@ void	clean_mem(t_info *table)
 	table->forks = NULL;
 	table->monitor = 0;
 }
-int	ft_atoi(const char *nptr)
+
+unsigned int	ft_atoi(const char *nptr)
 {
-	int	i;
-	int	neg;
-	int	final_nr;
+	unsigned int	i;
+	unsigned int	neg;
+	unsigned int	final_nr;
 
 	neg = 1;
 	final_nr = 0;
@@ -76,4 +73,28 @@ int	ft_atoi(const char *nptr)
 		i++;
 	}
 	return (final_nr * neg);
+}
+
+int	check_args(int argc, char *argv[])
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (i < argc)
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			if (argv[i][j] >= '0' && argv[i][j] <= '9')
+				j++;
+			else
+			{
+				ft_putstr_fd("ERROR: Invalid format!\n", 2);
+				return (-1);
+			}
+		}
+		i++;
+	}
+	return (0);
 }
