@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:14:55 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/12 10:45:37 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/13 19:52:31 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,9 @@ int	init_table(int argc, char *argv[], t_info *table)
 		printf("0 1 was taken a fork\n%d 1 died\n", table->time_to_die);
 		return (-1);
 	}
-	else if (table->nbr_philos % 2 == 0)
-	{
-		if (table->time_to_eat > table->time_to_sleep)
-			table->time_to_think = table->time_to_eat - table->time_to_sleep;
-		else
-			table->time_to_think = 0;
-	}
 	else
-	{
-		if (table->time_to_eat * 2 > table->time_to_sleep)
-			table->time_to_think = table->time_to_eat * 2
-				- table->time_to_sleep;
-		else
-			table->time_to_think = 0;
-	}
+		table->time_to_think = get_time_think(table->nbr_philos,
+				table->time_to_sleep, table->time_to_eat);
 	return (0);
 }
 
@@ -122,23 +110,33 @@ int	init_threads(t_info *table)
 		if (pthread_create(&table->philos[i].theread_id, NULL, &life_routine,
 				&table->philos[i]) != 0)
 		{
-			free_all(table);
 			printf("ERROR: Failed creating thread for philos\n");
-			return (-1);
+			return (free_all(table), -1);
 		}
 		i++;
 	}
 	if (pthread_create(&table->monitor, NULL, &death_routine, table) != 0)
 	{
-		free_all(table);
-		printf("ERROR: Failed creating thread for monitot\n");
-		return (-1);
+		printf("ERROR: Failed creating thread for monitor\n");
+		return (free_all(table), -1);
 	}
 	pthread_mutex_unlock(&table->life);
 	if (threads_union(table) == -1)
-	{
-		free_all(table);
-		return (-1);
-	}
+		return (free_all(table), -1);
 	return (0);
 }
+	/* if (table->nbr_philos % 2 == 0)
+	{
+		if (table->time_to_eat > table->time_to_sleep)
+			table->time_to_think = table->time_to_eat - table->time_to_sleep;
+		else
+			table->time_to_think = 0;
+	}
+	else
+	{
+		if (table->time_to_eat * 2 > table->time_to_sleep)
+			table->time_to_think = table->time_to_eat * 2
+				- table->time_to_sleep;
+		else
+			table->time_to_think = 0;
+	} */

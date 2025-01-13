@@ -19,7 +19,7 @@ RANDOM_MALLOC	=	-Xlinker --wrap=malloc
 
 INPUT = 4 100 100 100
 
-SRC				=	$(addprefix $(SRC_DIR), philo.c philo_utils.c inits.c errors.c routines.c) \
+SRC				=	$(addprefix $(SRC_DIR), philo.c philo_utils.c philo_utils_1.c inits.c errors.c routines.c) \
 				#	$(addprefix $(SRC_DIR), malloc.c) \
 
 OBJ_DIRS		=	$(OBJ_DIR) $(addprefix $(OBJ_DIR), $(SRC_DIR)) 

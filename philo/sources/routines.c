@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:32:18 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/12 10:49:12 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/13 21:18:27 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,69 +47,24 @@ void	*life_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	if (philo->table->nbr_philos % 2 == 0)
-	{
-		if (philo->id % 2 == 0)
-			usleep(philo->table->time_to_eat);
-	}
-	else
-	{
-		if (philo->id == philo->table->nbr_philos)
-		{
-			usleep(philo->table->time_to_eat * 2);
-		}
-		else if (philo->id % 2 == 0)
-		{
-			usleep(philo->table->time_to_eat);
-		}
-	}
+	initial_usleep(philo->table->nbr_philos, philo->id,
+		philo->table->time_to_eat);
 	while (1)
 	{
-		pthread_mutex_lock(&philo->table->life);
-		if (philo->table->extermination)
-		{
-			pthread_mutex_unlock(&philo->table->life);
+		if (is_dead(&philo->table->life, philo->table->extermination))
 			break ;
-		}
-		pthread_mutex_unlock(&philo->table->life);
-		if (philo->id % 2 == 0)
-		{
-			pthread_mutex_lock(philo->two_fork);
-			if (safe_printf("has taken a fork\n", philo->table, philo))
-				break ;
-			pthread_mutex_lock(philo->one_fork);
-			if (safe_printf("has taken a fork\n", philo->table, philo))
-				break ;
-		}
-		else
-		{
-			pthread_mutex_lock(philo->one_fork);
-			if (safe_printf("has taken a fork\n", philo->table, philo))
-				break ;
-			pthread_mutex_lock(philo->two_fork);
-			if (safe_printf("has taken a fork\n", philo->table, philo))
-				break ;
-		}
+		if (!take_forks(philo))
+			break ;
 		philo->time_last_meal = ft_my_time();
-		if (safe_printf("is eating\n", philo->table, philo))
+		if (!act("is eating\n", philo))
 			break ;
-		usleep(philo->table->time_to_eat * 1000);
 		philo->meals_eaten++;
-		if (safe_printf("is sleeping\n", philo->table, philo))
-			break ;
+		//printf("philo->meals_eaten: %u\n", philo->meals_eaten++);
 		pthread_mutex_unlock(philo->two_fork);
 		pthread_mutex_unlock(philo->one_fork);
-		pthread_mutex_lock(&philo->table->life);
-		if (philo->table->extermination)
-		{
-			pthread_mutex_unlock(&philo->table->life);
+		if (is_dead(&philo->table->life, philo->table->extermination)
+			|| !act("is sleeping\n", philo) || !act("is thinking\n", philo))
 			break ;
-		}
-		pthread_mutex_unlock(&philo->table->life);
-		usleep(philo->table->time_to_sleep * 1000);
-		if (safe_printf("is thinking\n", philo->table, philo))
-			break ;
-		usleep(philo->table->time_to_think * 1000);
 	}
 	pthread_mutex_unlock(philo->two_fork);
 	pthread_mutex_unlock(philo->one_fork);
@@ -151,3 +106,43 @@ void	*death_routine(void *arg)
 	}
 	return (NULL);
 }
+
+	/* if (philo->table->nbr_philos % 2 == 0)
+	{
+		if (philo->id % 2 == 0)
+			usleep(philo->table->time_to_eat);
+	}
+	else
+	{
+		if (philo->id == philo->table->nbr_philos)
+			usleep(philo->table->time_to_eat * 2);
+		else if (philo->id % 2 == 0)
+			usleep(philo->table->time_to_eat);
+	} */
+
+		// pthread_mutex_lock(&philo->table->life);
+		// if (philo->table->extermination)
+		// {
+		// 	pthread_mutex_unlock(&philo->table->life);
+		// 	break ;
+		// }
+		//pthread_mutex_unlock(&philo->table->life);
+
+		// if (philo->id % 2 == 0)
+		// {
+		// 	pthread_mutex_lock(philo->two_fork);
+		// 	if (safe_printf("has taken a fork\n", philo->table, philo))
+		// 		break ;
+		// 	pthread_mutex_lock(philo->one_fork);
+		// 	if (safe_printf("has taken a fork\n", philo->table, philo))
+		// 		break ;
+		// }
+		// else
+		// {
+		// 	pthread_mutex_lock(philo->one_fork);
+		// 	if (safe_printf("has taken a fork\n", philo->table, philo))
+		// 		break ;
+		// 	pthread_mutex_lock(philo->two_fork);
+		// 	if (safe_printf("has taken a fork\n", philo->table, philo))
+		// 		break ;
+		// }

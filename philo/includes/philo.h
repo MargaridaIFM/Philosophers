@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:12:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/12 10:48:46 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/13 20:02:17 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,27 +59,36 @@ typedef struct s_info
 }						t_info;
 
 // inits
-int						init_table(int argc, char *argv[], t_info *table);
-int						init_forks(t_info *table);
-int						init_monitor(t_info *table);
-void					create_philos(t_info *table);
-int						init_threads(t_info *table);
+int				init_table(int argc, char *argv[], t_info *table);
+int				init_forks(t_info *table);
+int				init_monitor(t_info *table);
+void			create_philos(t_info *table);
+int				init_threads(t_info *table);
 
 // routines
-int						threads_union(t_info *table);
-void					*life_routine(void *philo);
-void					*death_routine(void *table);
+int				threads_union(t_info *table);
+unsigned int	safe_printf(char *msg, t_info *table, t_philo *philo);
+void			*life_routine(void *philo);
+void			*death_routine(void *table);
 
 // utils
-void					ft_putstr_fd(char *s, int fd);
-unsigned int			ft_my_time(void);
-void					clean_mem(t_info *table);
-unsigned int			ft_atoi(const char *nptr);
-int						check_args(int argc, char *argv[]);
+void			ft_putstr_fd(char *s, int fd);
+unsigned int	ft_my_time(void);
+void			clean_mem(t_info *table);
+unsigned int	ft_atoi(const char *nptr);
+int				check_args(int argc, char *argv[]);
 
+// utils_1
+unsigned int	get_time_think(unsigned int nbr_philos,
+					unsigned int time_to_sleep, unsigned int time_to_eat);
+void			initial_usleep(unsigned int nbr_philos, unsigned int philo_id,
+					unsigned int time_to_eat);
+int				act(char *msg, t_philo *philo);
+int				take_forks(t_philo *philo);
+int 			is_dead(pthread_mutex_t *life_mutex, unsigned int status);
 // errorr
-void					free_all(t_info *table);
-void					free_philos(t_info *table);
-void					free_forks(t_info *table);
+void			free_all(t_info *table);
+void			free_philos(t_info *table);
+void			free_forks(t_info *table);
 
 #endif

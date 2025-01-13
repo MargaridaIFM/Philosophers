@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:30:56 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/12 10:26:13 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/13 16:19:34 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,10 @@ int	main(int argc, char *argv[])
 	free_all(&table);
 	return (0);
 }
-//! acrescentar:
-//!  pthread_mutex_destroy(&table->life);
 
 /*
 ! [] IMPORTANTE
 	TODO [] exit is not allowed;
-	[] getter - pesquisar
-	[] setter - pesquisar
 
 [x] clean initial memory;
 [x] check args[] check nbr of philos (parsing) and // TODO init table
@@ -56,11 +52,7 @@ int	main(int argc, char *argv[])
 			[x] wait x time and return(0); // ?
 	[x] atoi for only positiv numbers;
 	[x] check args > 0 && time_to_sleep >= 0;
-	// [] //TODO (get_my_time) ?
 
-// [] init_table
-// 	[] start_time ? //! (get_my_time)
-//  	[] args na info
 [] init_forks
 	[x] malloc sizof(mutex) * nrb_philos;
 	[x] while
