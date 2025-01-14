@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 16:37:05 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/13 19:53:54 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:57:45 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ void	initial_usleep(unsigned int nbr_philos, unsigned int philo_id,
 	}
 }
 
-int	act(char *msg, t_philo *philo)
+int	act(char *msg, t_philo *philo, unsigned int time)
 {
 	if (safe_printf(msg, philo->table, philo))
 		return (0);
-	usleep(philo->table->time_to_think * 1000);
+	usleep(time * 1000);
 	return (1);
 }
 
@@ -58,10 +58,10 @@ int	take_forks(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(philo->two_fork);
+		pthread_mutex_lock(philo->one_fork);
 		if (safe_printf("has taken a fork\n", philo->table, philo))
 			return (0);
-		pthread_mutex_lock(philo->one_fork);
+		pthread_mutex_lock(philo->two_fork);
 		if (safe_printf("has taken a fork\n", philo->table, philo))
 			return (0);
 	}

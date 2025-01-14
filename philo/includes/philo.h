@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:12:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/13 20:02:17 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:58:35 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_info
 	unsigned int		extermination;
 	pthread_mutex_t		print;
 	pthread_mutex_t		life;
+	pthread_mutex_t		meals;
 	pthread_t			monitor;
 }						t_info;
 
@@ -83,7 +84,7 @@ unsigned int	get_time_think(unsigned int nbr_philos,
 					unsigned int time_to_sleep, unsigned int time_to_eat);
 void			initial_usleep(unsigned int nbr_philos, unsigned int philo_id,
 					unsigned int time_to_eat);
-int				act(char *msg, t_philo *philo);
+int				act(char *msg, t_philo *philo, unsigned int time);
 int				take_forks(t_philo *philo);
 int 			is_dead(pthread_mutex_t *life_mutex, unsigned int status);
 // errorr

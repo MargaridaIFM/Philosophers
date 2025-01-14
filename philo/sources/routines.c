@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:32:18 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/13 21:18:27 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:10:45 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,19 @@ unsigned int	safe_printf(char *msg, t_info *table, t_philo *philo)
 	pthread_mutex_unlock(&table->print);
 	return (1);
 }
+void	meals_iteration(t_philo *philo)
+{
+	// pthread_mutex_lock(&table->meals);
+	// meals_eaten++;
+	// if (meals_eaten == table->nbr_of_meals)
+	// 	table->philos_eaten++;
+	// pthread_mutex_unlock(&table->meals);
+		pthread_mutex_lock(&philo->table->meals);
+		philo->meals_eaten++;
+		if (philo->meals_eaten == philo->table->nbr_of_meals)
+				philo->table->philos_eaten++;
+		pthread_mutex_unlock(&philo->table->meals);
+}
 
 void	*life_routine(void *arg)
 {
@@ -56,15 +69,21 @@ void	*life_routine(void *arg)
 		if (!take_forks(philo))
 			break ;
 		philo->time_last_meal = ft_my_time();
-		if (!act("is eating\n", philo))
+		if (!act("is eating\n", philo, philo->table->time_to_eat))
 			break ;
-		philo->meals_eaten++;
-		//printf("philo->meals_eaten: %u\n", philo->meals_eaten++);
+		meals_iteration(philo);
 		pthread_mutex_unlock(philo->two_fork);
 		pthread_mutex_unlock(philo->one_fork);
+		pthread_mutex_lock(&philo->table->life);
 		if (is_dead(&philo->table->life, philo->table->extermination)
-			|| !act("is sleeping\n", philo) || !act("is thinking\n", philo))
-			break ;
+			|| !act("is sleeping\n", philo, philo->table->time_to_sleep)
+			|| !act("is thinking\n", philo, philo->table->time_to_think))
+			{
+				pthread_mutex_unlock(&philo->table->life);
+				return (NULL);
+			}
+		pthread_mutex_unlock(&philo->table->life);
+		
 	}
 	pthread_mutex_unlock(philo->two_fork);
 	pthread_mutex_unlock(philo->one_fork);
@@ -92,11 +111,9 @@ void	*death_routine(void *arg)
 					table->philos[i].id);
 				return (NULL);
 			}
-			if (table->philos[i].meals_eaten == table->nbr_of_meals)
-				table->philos_eaten++;
 			i++;
 		}
-		if (table->philos_eaten == table->nbr_of_meals)
+		if (table->philos_eaten == table->nbr_philos)
 		{
 			table->extermination = 1;
 			pthread_mutex_unlock(&table->life);
