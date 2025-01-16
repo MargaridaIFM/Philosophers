@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:12:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/14 18:58:35 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/16 18:53:34 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,13 @@ void			initial_usleep(unsigned int nbr_philos, unsigned int philo_id,
 					unsigned int time_to_eat);
 int				act(char *msg, t_philo *philo, unsigned int time);
 int				take_forks(t_philo *philo);
-int 			is_dead(pthread_mutex_t *life_mutex, unsigned int status);
+int				is_dead(t_info *table);
+
+// utils_2
+int				take_forks_impar(t_philo *philo);
+void			error_pthread(t_info *table);
+int				extreminate_if(t_info *table);
+
 // errorr
 void			free_all(t_info *table);
 void			free_philos(t_info *table);

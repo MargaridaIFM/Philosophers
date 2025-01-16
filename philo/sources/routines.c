@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:32:18 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/14 19:10:45 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/16 18:54:05 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,27 @@ int	threads_union(t_info *table)
 unsigned int	safe_printf(char *msg, t_info *table, t_philo *philo)
 {
 	pthread_mutex_lock(&table->print);
+	pthread_mutex_lock(&table->life);
 	if (table->extermination == 0)
 	{
 		printf("%lu %d ", ft_my_time() - philo->table->start_time, philo->id);
 		printf("%s", msg);
+		pthread_mutex_unlock(&table->life);
 		pthread_mutex_unlock(&table->print);
 		return (0);
 	}
+	pthread_mutex_unlock(&table->life);
 	pthread_mutex_unlock(&table->print);
 	return (1);
 }
+
 void	meals_iteration(t_philo *philo)
 {
-	// pthread_mutex_lock(&table->meals);
-	// meals_eaten++;
-	// if (meals_eaten == table->nbr_of_meals)
-	// 	table->philos_eaten++;
-	// pthread_mutex_unlock(&table->meals);
-		pthread_mutex_lock(&philo->table->meals);
-		philo->meals_eaten++;
-		if (philo->meals_eaten == philo->table->nbr_of_meals)
-				philo->table->philos_eaten++;
-		pthread_mutex_unlock(&philo->table->meals);
+	pthread_mutex_lock(&philo->table->meals);
+	philo->meals_eaten++;
+	if (philo->meals_eaten == philo->table->nbr_of_meals)
+		philo->table->philos_eaten++;
+	pthread_mutex_unlock(&philo->table->meals);
 }
 
 void	*life_routine(void *arg)
@@ -62,31 +61,25 @@ void	*life_routine(void *arg)
 	philo = (t_philo *)arg;
 	initial_usleep(philo->table->nbr_philos, philo->id,
 		philo->table->time_to_eat);
-	while (1)
+	while (!is_dead(philo->table))
 	{
-		if (is_dead(&philo->table->life, philo->table->extermination))
-			break ;
 		if (!take_forks(philo))
 			break ;
 		philo->time_last_meal = ft_my_time();
 		if (!act("is eating\n", philo, philo->table->time_to_eat))
+		{
+			pthread_mutex_unlock(philo->two_fork);
+			pthread_mutex_unlock(philo->one_fork);
 			break ;
+		}
 		meals_iteration(philo);
 		pthread_mutex_unlock(philo->two_fork);
 		pthread_mutex_unlock(philo->one_fork);
-		pthread_mutex_lock(&philo->table->life);
-		if (is_dead(&philo->table->life, philo->table->extermination)
-			|| !act("is sleeping\n", philo, philo->table->time_to_sleep)
-			|| !act("is thinking\n", philo, philo->table->time_to_think))
-			{
-				pthread_mutex_unlock(&philo->table->life);
-				return (NULL);
-			}
-		pthread_mutex_unlock(&philo->table->life);
-		
+		if (!act("is sleeping\n", philo, philo->table->time_to_sleep))
+			break ;
+		if (!act("is thinking\n", philo, philo->table->time_to_think))
+			break ;
 	}
-	pthread_mutex_unlock(philo->two_fork);
-	pthread_mutex_unlock(philo->one_fork);
 	return (NULL);
 }
 
@@ -113,13 +106,8 @@ void	*death_routine(void *arg)
 			}
 			i++;
 		}
-		if (table->philos_eaten == table->nbr_philos)
-		{
-			table->extermination = 1;
-			pthread_mutex_unlock(&table->life);
-			return (NULL);
-		}
-		pthread_mutex_unlock(&table->life);
+		if (extreminate_if(table))
+			break ;
 	}
 	return (NULL);
 }

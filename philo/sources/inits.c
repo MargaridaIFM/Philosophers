@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:14:55 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/14 18:42:53 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/16 18:48:41 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	init_monitor(t_info *table)
 		ft_putstr_fd("ERROR: Failed creating mutex\n", 2);
 		return (-1);
 	}
-		if (pthread_mutex_init(&table->meals, NULL) != 0)
+	if (pthread_mutex_init(&table->meals, NULL) != 0)
 	{
 		ft_putstr_fd("ERROR: Failed creating mutex\n", 2);
 		return (-1);
@@ -106,30 +106,34 @@ void	create_philos(t_info *table)
 int	init_threads(t_info *table)
 {
 	unsigned int	i;
+	unsigned int	j;
 
 	i = 0;
 	table->start_time = ft_my_time();
-	//pthread_mutex_lock(&table->life);
 	while (i < table->nbr_philos)
 	{
 		if (pthread_create(&table->philos[i].theread_id, NULL, &life_routine,
 				&table->philos[i]) != 0)
 		{
-			printf("ERROR: Failed creating thread for philos\n");
-			return (free_all(table), -1);
+			error_pthread(table);
+			j = 0;
+			while (j++ < i)
+				pthread_join(table->philos[j].theread_id, NULL);
+			return (-1);
 		}
 		i++;
 	}
 	if (pthread_create(&table->monitor, NULL, &death_routine, table) != 0)
-	{
-		printf("ERROR: Failed creating thread for monitor\n");
-		return (free_all(table), -1);
-	}
-	//pthread_mutex_unlock(&table->life);
+		error_pthread(table);
 	if (threads_union(table) == -1)
-		return (free_all(table), -1);
+		return (-1);
 	return (0);
 }
+
+		// printf("ERROR: Failed creating thread for monitor\n");
+		// pthread_mutex_lock(&table->life);
+		// table->extermination = 1;
+		// pthread_mutex_unlock(&table->life);
 	/* if (table->nbr_philos % 2 == 0)
 	{
 		if (table->time_to_eat > table->time_to_sleep)
