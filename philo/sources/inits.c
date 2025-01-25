@@ -6,11 +6,30 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:14:55 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/16 18:48:41 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/25 21:54:59 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+void	clean_mem(t_info *table)
+{
+	table->start_time = 0;
+	table->nbr_philos = 0;
+	table->time_to_die = 0;
+	table->time_to_eat = 0;
+	table->time_to_sleep = 0;
+	table->time_to_think = 0;
+	table->nbr_of_meals = 0;
+	table->extermination = 0;
+	table->philos_eaten = 0;
+	table->philos = NULL;
+	table->forks = NULL;
+	table->monitor = 0;
+	table->flag_meals = 0;
+	table->flag_print = 0;
+	table->flag_life = 0;
+}
 
 int	init_table(int argc, char *argv[], t_info *table)
 {
@@ -25,7 +44,7 @@ int	init_table(int argc, char *argv[], t_info *table)
 			return (-1);
 	}
 	if (table->time_to_die == 0 || table->time_to_eat == 0
-		|| table->time_to_sleep == 0 || table->nbr_philos < 1)
+		|| table->time_to_sleep == 0 || table->nbr_philos == 0)
 		return (-1);
 	if (table->nbr_philos == 1)
 	{
@@ -69,16 +88,19 @@ int	init_monitor(t_info *table)
 		ft_putstr_fd("ERROR: Failed creating mutex\n", 2);
 		return (-1);
 	}
+	table->flag_life = 1;
 	if (pthread_mutex_init(&table->print, NULL) != 0)
 	{
 		ft_putstr_fd("ERROR: Failed creating mutex\n", 2);
 		return (-1);
 	}
+	table->flag_print = 1;
 	if (pthread_mutex_init(&table->meals, NULL) != 0)
 	{
 		ft_putstr_fd("ERROR: Failed creating mutex\n", 2);
 		return (-1);
 	}
+	table->flag_meals = 1;
 	return (0);
 }
 
@@ -101,33 +123,6 @@ void	create_philos(t_info *table)
 		table->philos[idx].one_fork = &table->forks[idx];
 		idx++;
 	}
-}
-
-int	init_threads(t_info *table)
-{
-	unsigned int	i;
-	unsigned int	j;
-
-	i = 0;
-	table->start_time = ft_my_time();
-	while (i < table->nbr_philos)
-	{
-		if (pthread_create(&table->philos[i].theread_id, NULL, &life_routine,
-				&table->philos[i]) != 0)
-		{
-			error_pthread(table);
-			j = 0;
-			while (j++ < i)
-				pthread_join(table->philos[j].theread_id, NULL);
-			return (-1);
-		}
-		i++;
-	}
-	if (pthread_create(&table->monitor, NULL, &death_routine, table) != 0)
-		error_pthread(table);
-	if (threads_union(table) == -1)
-		return (-1);
-	return (0);
 }
 
 		// printf("ERROR: Failed creating thread for monitor\n");

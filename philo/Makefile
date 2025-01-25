@@ -1,11 +1,11 @@
-.SILENT:
+
 MAKEFLAGS += --no-print-directory
 
 NAME			=	philo
 
 CC				=	cc
 
-CFLAGS			=	-Wall -Wextra -Werror -gdwarf-4 #-fsanitize=thread
+CFLAGS			=	-Wall -Wextra -Werror -gdwarf-4
 
 RM				=	rm -rf
 
@@ -17,10 +17,9 @@ OBJ_DIR			=	objs/
 
 RANDOM_MALLOC	=	-Xlinker --wrap=malloc
 
-INPUT = 5 8000 200 200 7
+INPUT = 5 800 200 200
 
-SRC				=	$(addprefix $(SRC_DIR), philo.c philo_utils.c philo_utils_1.c philo_utils_2.c inits.c errors.c routines.c) \
-				#	$(addprefix $(SRC_DIR), malloc.c) \
+SRC				=	$(addprefix $(SRC_DIR), philo.c philo_utils.c philo_utils_1.c life_routine_utils.c dead_routine_utils.c inits.c errors.c routines.c)
 
 OBJ_DIRS		=	$(OBJ_DIR) $(addprefix $(OBJ_DIR), $(SRC_DIR)) 
 
@@ -62,9 +61,6 @@ drd: $(NAME)
 	make re 
 	clear 
 	valgrind --tool=drd ./$(NAME) $(INPUT)
-#AFAZER: por alguma razão -fsanitize=thread dá um erro imediato
-#san: obj $(OBJ)
-#	$(CC) $(CFLAGS) -fsanitize=thread $(DEBUG) $(OBJ) -o $(NAME)
 
 .PHONY:				all clean fclean re val
 

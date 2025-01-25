@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 21:01:34 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/12 10:41:30 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/25 21:55:29 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,6 @@ unsigned int	ft_my_time(void)
 	gettimeofday(&tv, NULL);
 	time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (time);
-}
-
-void	clean_mem(t_info *table)
-{
-	table->start_time = 0;
-	table->nbr_philos = 0;
-	table->time_to_die = 0;
-	table->time_to_eat = 0;
-	table->time_to_sleep = 0;
-	table->time_to_think = 0;
-	table->nbr_of_meals = 0;
-	table->extermination = 0;
-	table->philos_eaten = 0;
-	table->philos = NULL;
-	table->forks = NULL;
-	table->monitor = 0;
 }
 
 unsigned int	ft_atoi(const char *nptr)
