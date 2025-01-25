@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:32:18 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/16 18:54:05 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/25 11:31:00 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void	*death_routine(void *arg)
 		}
 		if (extreminate_if(table))
 			break ;
+		else
+			usleep(500);
 	}
 	return (NULL);
 }
@@ -151,3 +153,7 @@ void	*death_routine(void *arg)
 		// 	if (safe_printf("has taken a fork\n", philo->table, philo))
 		// 		break ;
 		// }
+
+// 		valgrind --tool=helgrind 200 800 701 100
+// valgrind ./philo -10 1000 100 100 100
+// ./philo 198 310 100 100 1
