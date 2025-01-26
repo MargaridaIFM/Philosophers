@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:14:55 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/25 21:54:59 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/26 01:00:50 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,23 +124,3 @@ void	create_philos(t_info *table)
 		idx++;
 	}
 }
-
-		// printf("ERROR: Failed creating thread for monitor\n");
-		// pthread_mutex_lock(&table->life);
-		// table->extermination = 1;
-		// pthread_mutex_unlock(&table->life);
-	/* if (table->nbr_philos % 2 == 0)
-	{
-		if (table->time_to_eat > table->time_to_sleep)
-			table->time_to_think = table->time_to_eat - table->time_to_sleep;
-		else
-			table->time_to_think = 0;
-	}
-	else
-	{
-		if (table->time_to_eat * 2 > table->time_to_sleep)
-			table->time_to_think = table->time_to_eat * 2
-				- table->time_to_sleep;
-		else
-			table->time_to_think = 0;
-	} */

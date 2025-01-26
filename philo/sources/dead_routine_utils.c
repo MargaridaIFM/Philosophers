@@ -6,29 +6,11 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 18:40:41 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/25 21:54:43 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/26 01:00:36 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-// int	take_forks_impar(t_philo *philo)
-// {
-// 	pthread_mutex_lock(philo->one_fork);
-// 	if (safe_printf("has taken a fork\n", philo->table, philo))
-// 	{
-// 		pthread_mutex_unlock(philo->one_fork);
-// 		return (0);
-// 	}
-// 	pthread_mutex_lock(philo->two_fork);
-// 	if (safe_printf("has taken a fork\n", philo->table, philo))
-// 	{
-// 		pthread_mutex_unlock(philo->two_fork);
-// 		pthread_mutex_unlock(philo->one_fork);
-// 		return (0);
-// 	}
-// 	return (1);
-// }
 
 void	error_pthread(t_info *table)
 {

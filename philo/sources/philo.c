@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:30:56 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/13 16:19:34 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/26 01:01:53 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	main(int argc, char *argv[])
 }
 
 /*
-! [] IMPORTANTE
-	TODO [] exit is not allowed;
+! [] I had made some alterations in logic
+	
 
 [x] clean initial memory;
 [x] check args[] check nbr of philos (parsing) and // TODO init table

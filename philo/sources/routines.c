@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:32:18 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/25 23:51:39 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:59:56 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,47 +111,3 @@ void	*death_routine(void *arg)
 	}
 	return (NULL);
 }
-
-/* if (philo->table->nbr_philos % 2 == 0)
-{
-	if (philo->id % 2 == 0)
-		usleep(philo->table->time_to_eat);
-}
-else
-{
-	if (philo->id == philo->table->nbr_philos)
-		usleep(philo->table->time_to_eat * 2);
-	else if (philo->id % 2 == 0)
-		usleep(philo->table->time_to_eat);
-} */
-
-// pthread_mutex_lock(&philo->table->life);
-// if (philo->table->extermination)
-// {
-// 	pthread_mutex_unlock(&philo->table->life);
-// 	break ;
-// }
-// pthread_mutex_unlock(&philo->table->life);
-
-// if (philo->id % 2 == 0)
-// {
-// 	pthread_mutex_lock(philo->two_fork);
-// 	if (safe_printf("has taken a fork\n", philo->table, philo))
-// 		break ;
-// 	pthread_mutex_lock(philo->one_fork);
-// 	if (safe_printf("has taken a fork\n", philo->table, philo))
-// 		break ;
-// }
-// else
-// {
-// 	pthread_mutex_lock(philo->one_fork);
-// 	if (safe_printf("has taken a fork\n", philo->table, philo))
-// 		break ;
-// 	pthread_mutex_lock(philo->two_fork);
-// 	if (safe_printf("has taken a fork\n", philo->table, philo))
-// 		break ;
-// }
-
-// pthread_mutex_lock(&philo->table->life);
-// philo->time_last_meal = ft_my_time();
-// pthread_mutex_unlock(&philo->table->life);

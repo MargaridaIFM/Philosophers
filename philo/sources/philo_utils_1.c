@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 16:37:05 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/26 00:56:18 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/26 01:00:10 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,31 +77,3 @@ void	choose_forks(t_philo *philo, pthread_mutex_t **fork_one,
 		*fork_two = philo->two_fork;
 	}
 }
-
-// int	ft_my_usleep(size_t milliseconds)
-// {
-// 	unsigned int	start;
-// 	unsigned int	elapsed;
-
-// 	elapsed = 0;
-// 	start = ft_my_time();
-// 	while (elapsed < milliseconds)
-// 	{
-// 		usleep(100);
-// 		elapsed = ft_my_time() - start;
-// 	}
-// 	return (0);
-// }
-// pthread_mutex_lock(philo->one_fork);
-// if (safe_printf("has taken a fork\n", philo->table, philo))
-// {
-// 	pthread_mutex_unlock(philo->one_fork);
-// 	return (0);
-// }
-// pthread_mutex_lock(philo->two_fork);
-// if (safe_printf("has taken a fork\n", philo->table, philo))
-// {
-// 	pthread_mutex_unlock(philo->two_fork);
-// 	pthread_mutex_unlock(philo->one_fork);
-// 	return (0);
-// }
