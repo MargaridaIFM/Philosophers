@@ -6,12 +6,20 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:32:18 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/26 00:59:56 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/26 17:59:11 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+/**
+ * @brief Initializes philosopher threads and the monitor thread.
+ *
+ * If thread creation fails, it cleans up any already created threads.
+ *
+ * @param table Pointer to the table structure
+ * @return 0 if all threads are successfully created, -1 otherwise.
+ */
 int	init_threads(t_info *table)
 {
 	unsigned int	i;
@@ -38,6 +46,14 @@ int	init_threads(t_info *table)
 		return (-1);
 	return (0);
 }
+/**
+ * @brief Joins all philosopher threads and the monitor thread.
+ *
+ * Waits for all philosopher and monitor threads to complete execution.
+ *
+ * @param table Pointer to the table structure.
+ * @return 0 if all threads are successfully joined, -1 otherwise.
+ */
 
 int	threads_union(t_info *table)
 {
@@ -55,6 +71,16 @@ int	threads_union(t_info *table)
 	return (0);
 }
 
+/**
+ * @brief Routine executed by each philosopher thread.
+ *
+ * Simulates the lifecycle of a philosopher, including eating, sleeping, 
+ * and thinking. The routine ends if the philosopher dies 
+ * or if the simulation is terminated.
+ *
+ * @param arg Pointer to the philosopher structure.
+ * @return NULL when the routine completes.
+ */
 void	*life_routine(void *arg)
 {
 	t_philo	*philo;
@@ -82,6 +108,15 @@ void	*life_routine(void *arg)
 	}
 	return (NULL);
 }
+/**
+ * @brief Routine for monitoring philosopher deaths and simulation termination.
+ *
+ * Continuously checks if any philosopher has died or if all philosophers 
+ * have eaten the required number of meals.
+ *
+ * @param arg Pointer to the table structure.
+ * @return NULL when the routine completes or a philosopher dies.
+ */
 
 void	*death_routine(void *arg)
 {

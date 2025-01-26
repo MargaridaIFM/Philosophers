@@ -6,12 +6,18 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:14:55 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/26 01:00:50 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/26 17:33:26 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+/**
+ * @brief  This function ensures that all the fields in the `t_info` struct 
+ * are initialized to zero or NULL to prevent undefined behavior.
+ *
+ * @param table Pointer to the t_info structure to be cleared.
+ */
 void	clean_mem(t_info *table)
 {
 	table->start_time = 0;
@@ -31,6 +37,16 @@ void	clean_mem(t_info *table)
 	table->flag_life = 0;
 }
 
+/**
+ * @brief Initializes the t_info structure with the input parameters.
+ * Check if all the input are greater than 0.
+ * Also calculates the time to think for each philosopher.
+ *
+ * @param argc Number of arguments passed to the program.
+ * @param argv Array of strings containing the arguments.
+ * @param table Pointer to the t_info structure to be initialized.
+ * @return 0 on success, -1 if an error occurs.
+ */
 int	init_table(int argc, char *argv[], t_info *table)
 {
 	table->nbr_philos = ft_atoi(argv[1]);
@@ -58,6 +74,14 @@ int	init_table(int argc, char *argv[], t_info *table)
 	return (0);
 }
 
+/**
+ * @brief Initializes the mutexes (forks) for the philosophers.
+ *
+ * Allocates memory for and initializes a mutex for each fork.
+ *
+ * @param table Pointer to the t_info structure
+ * @return 0 on success, -1 if an error occurs.
+ */
 int	init_forks(t_info *table)
 {
 	unsigned int	i;
@@ -81,6 +105,13 @@ int	init_forks(t_info *table)
 	return (0);
 }
 
+/**
+ * @brief Creates mutexes for managing philosopher life, 
+ * printing output, and tracking meals.
+ *
+ * @param table Pointer to the t_info structure 
+ * @return 0 on success, -1 if an error occurs.
+ */
 int	init_monitor(t_info *table)
 {
 	if (pthread_mutex_init(&table->life, NULL) != 0)
@@ -104,6 +135,12 @@ int	init_monitor(t_info *table)
 	return (0);
 }
 
+/**
+ * @brief Creates and initializes the philosopher structures
+ * and assigns forks to each philosopher.
+ *
+ * @param table Pointer to the t_info structure
+ */
 void	create_philos(t_info *table)
 {
 	unsigned int	idx;

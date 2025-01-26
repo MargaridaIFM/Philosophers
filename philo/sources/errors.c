@@ -6,11 +6,17 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:53:22 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/25 13:33:18 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/26 17:39:13 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+/**
+ * @brief Frees all allocated resources and destroys mutexes in the simulation.
+ *
+ * @param table Pointer to the t_info structure.
+ */
 
 void	free_all(t_info *table)
 {
@@ -26,6 +32,11 @@ void	free_all(t_info *table)
 		pthread_mutex_destroy(&table->meals);
 }
 
+/**
+ * @brief Frees memory allocated for the philosophers and resets their fields.
+ *
+ * @param table Pointer to the t_info structure.
+ */
 void	free_philos(t_info *table)
 {
 	unsigned int	i;
@@ -41,6 +52,11 @@ void	free_philos(t_info *table)
 	free(table->philos);
 }
 
+/**
+ * @brief Frees memory allocated for the forks and destroys their mutexes.
+ *
+ * @param table Pointer to the t_info structure.
+ */
 void	free_forks(t_info *table)
 {
 	unsigned int	i;
