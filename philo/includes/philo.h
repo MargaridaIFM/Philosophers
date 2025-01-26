@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 12:12:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/25 23:42:33 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:55:51 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int				initial_usleep(t_philo *philo);
 unsigned int	safe_printf(char *msg, t_info *table, t_philo *philo);
 void			choose_forks(t_philo *philo, pthread_mutex_t **fork_one,
 					pthread_mutex_t **fork_two);
-int				ft_my_usleep(size_t milliseconds);
+
 // dead_routine_utils
 void			error_pthread(t_info *table);
 int				extreminate_if(t_info *table);

@@ -6,7 +6,7 @@
 /*   By: mfrancis <mfrancis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 21:40:42 by mfrancis          #+#    #+#             */
-/*   Updated: 2025/01/25 23:52:48 by mfrancis         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:46:37 by mfrancis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	take_forks(t_philo *philo)
 
 	choose_forks(philo, &fork_one, &fork_two);
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		usleep(100);
 	pthread_mutex_lock(fork_one);
 	if (safe_printf("has taken a fork\n", philo->table, philo))
 	{
